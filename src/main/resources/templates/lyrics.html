@@ -1,0 +1,20 @@
+<!-- Example built from: https://spring.io/guides/gs/handling-form-submission/ -->
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <title>Timeless hits</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+Can you write a timeless hit song? <br>
+Enter your song lyrics below <br>
+enter words separated by spaces (rather than commas)
+
+<h1>Form</h1>
+<form action="#" th:action="@{/lyrics}" th:object="${lyrics}" method="post">
+  <p>Lyrics: <input type="text" th:field="*{content}" /></p>
+  <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>
