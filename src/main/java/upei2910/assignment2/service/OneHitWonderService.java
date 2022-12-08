@@ -22,6 +22,9 @@ import java.util.function.Predicate;
 @Service
 public class OneHitWonderService {
     private ArrayList<SongLyric> lyricList;
+    /**
+     * Declare new class and assign it to a variable
+     */
     Calc calcX = new Calc();
     public OneHitWonderService() {
        //remember that loadData should be called externally from outside this method
@@ -81,15 +84,6 @@ public class OneHitWonderService {
 
         }
         return scores;
-    }
-
-    public void processLyrics(Predicate<SongLyric> predicate, Consumer<SongLyric> consumer){
-        for (SongLyric sl: lyricList){
-            if(predicate.test(sl)){
-                consumer.accept(sl);
-            }
-        }
-
     }
 
     public static void main(String[] args) throws IOException {

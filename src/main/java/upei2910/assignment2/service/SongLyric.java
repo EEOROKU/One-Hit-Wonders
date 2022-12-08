@@ -2,7 +2,22 @@ package upei2910.assignment2.service;
 
 import java.util.ArrayList;
 
+/**
+ * Record to track the following:
+ * @param rank
+ * @param song
+ * @param artist
+ * @param year
+ * @param lyricsList the lyrics
+ */
 public record SongLyric(int rank, String song, String artist, int year, String lyricsList) {
+    /**
+     * the method below sorts a line of string to find the lyrics while removing the quotes from the beginning and end of the code.
+     * the quote removal is done after splitting the line by a comma
+     * after the third member of the array you split the first word and put it back together without the quote and repeat for the last word.
+     * @param s the line of string passed in
+     * @return a record that tracks the rank, song, artist, year, lyrics
+     */
     public static SongLyric toSongLyric(String s){
         String[] sArr = s.split(",");
         String x = "";
