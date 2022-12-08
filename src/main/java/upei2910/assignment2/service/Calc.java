@@ -62,16 +62,24 @@ public class Calc {
      *              call fort lyricsList from the record and pass it into score which returns a hashmap
      *              add that to the right arraylist
      */
+    ArrayList<Integer> sr = new ArrayList<>();
+    ArrayList<Integer> er = new ArrayList<>();
+    ArrayList<Integer> nr = new ArrayList<>();
+    ArrayList<Integer> tr = new ArrayList<>();
     public void decScore(ArrayList<SongLyric> y){
         for (SongLyric x:y){
                 if (x.year() < 1981) {
                     seventies.add(score(x.lyricsList()));
+                    sr.add(x.rank());
                 } else if (x.year() < 1991) {
                     eighties.add(score(x.lyricsList()));
+                    er.add(x.rank());
                 } else if (x.year()< 2001) {
                     nineties.add(score(x.lyricsList()));
+                    nr.add(x.rank());
                 } else {
                     twoThousand.add(score(x.lyricsList()));
+                    tr.add(x.rank());
                 }
             }
     }
@@ -178,5 +186,41 @@ public class Calc {
                 mostSimilarTwoT= x;
             }
         }
+    }
+    double mostSimilarSevenr = 0;
+    double mostSimilarEightr = 0;
+    double mostSimilarNiner = 0;
+    double mostSimilarTwoTr = 0;
+    public void rank(){
+        for (int i =0;i< sev.size();i++){
+            if (sev.get(i)==mostSimilarSeven){
+                mostSimilarSevenr = sr.get(i);
+            }
+        }
+        for (int i =0;i< eig.size();i++){
+            if (eig.get(i)==mostSimilarEight){
+                mostSimilarEightr = er.get(i);
+            }
+        }
+        for (int i =0;i< nin.size();i++){
+            if (nin.get(i)==mostSimilarNine){
+                mostSimilarNiner = nr.get(i);
+            }
+        }
+        for (int i =0;i< tt.size();i++){
+            if (tt.get(i)==mostSimilarTwoT){
+                mostSimilarTwoTr = tr.get(i);
+            }
+        }
+    }
+    public int rankp (int x){
+        if (x<26){
+            return 0;
+        } else if (x<51){
+            return 1;
+        } else if (x<76){
+            return 2;
+        }
+        return 3;
     }
 }

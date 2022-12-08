@@ -69,17 +69,18 @@ public class OneHitWonderService {
         HashMap<String, Double> x = calcX.lscore(lyrics);
         calcX.finish(x);
         calcX.largest();
+        calcX.rank();
         QuartileScore[] scores =  new QuartileScore[4];
 
         for(int i = 0; i < 4; i++) {
             if (i==0) {
-                scores[i] = new QuartileScore(2, calcX.mostSimilarSeven);
+                scores[i] = new QuartileScore(calcX.rankp((int) calcX.mostSimilarSevenr), calcX.mostSimilarSeven);
             } else if (i==1) {
-                scores[i] = new QuartileScore(3, calcX.mostSimilarEight);
+                scores[i] = new QuartileScore(calcX.rankp((int) calcX.mostSimilarEightr), calcX.mostSimilarEight);
             } else if (i==2) {
-                scores[i] = new QuartileScore(4, calcX.mostSimilarNine);
+                scores[i] = new QuartileScore(calcX.rankp((int) calcX.mostSimilarNiner), calcX.mostSimilarNine);
             }else {
-                scores[i] = new QuartileScore(1, calcX.mostSimilarTwoT);
+                scores[i] = new QuartileScore(calcX.rankp((int) calcX.mostSimilarTwoTr), calcX.mostSimilarTwoT);
             }
 
         }
