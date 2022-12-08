@@ -4,6 +4,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 
 /**
@@ -15,9 +21,11 @@ import java.io.IOException;
  */
 @Service
 public class OneHitWonderService {
-
+    private ArrayList<SongLyric> lyricList;
+    Calc calcX = new Calc();
     public OneHitWonderService() {
        //remember that loadData should be called externally from outside this method
+        lyricList = new ArrayList<>();
     }
 
     /**
@@ -28,6 +36,15 @@ public class OneHitWonderService {
     public void loadData(String filename) throws IOException {
         //feel free to use this line if you like
         File f = Helper.openResourceFile(filename);
+
+        Scanner scan = new Scanner(f);
+        while (scan.hasNextLine()){
+            String s = scan.nextLine();
+            String[] st = s.split(",");
+            if (st.length != 5){
+                lyricList.add(SongLyric.toSongLyric(s));
+            }
+        }
     }
 
 
@@ -45,12 +62,34 @@ public class OneHitWonderService {
      * 2nd: 1990s, and 3rd 2000's
      */
     public QuartileScore[] bestMatches(String lyrics) {
-
+        calcX.decScore(lyricList);
+        HashMap<String, Double> x = calcX.lscore(lyrics);
+        calcX.finish(x);
+        calcX.largest();
         QuartileScore[] scores =  new QuartileScore[4];
+
         for(int i = 0; i < 4; i++) {
-            scores[i] = new QuartileScore(0,0);
+            if (i==0) {
+                scores[i] = new QuartileScore(2, calcX.mostSimilarSeven);
+            } else if (i==1) {
+                scores[i] = new QuartileScore(3, calcX.mostSimilarEight);
+            } else if (i==2) {
+                scores[i] = new QuartileScore(4, calcX.mostSimilarNine);
+            }else {
+                scores[i] = new QuartileScore(1, calcX.mostSimilarTwoT);
+            }
+
         }
         return scores;
+    }
+
+    public void processLyrics(Predicate<SongLyric> predicate, Consumer<SongLyric> consumer){
+        for (SongLyric sl: lyricList){
+            if(predicate.test(sl)){
+                consumer.accept(sl);
+            }
+        }
+
     }
 
     public static void main(String[] args) throws IOException {
