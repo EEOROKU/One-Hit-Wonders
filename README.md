@@ -1,4 +1,3 @@
-# CS2910 - Assignment-02
 ## One Hit Wonders
 
 To help understand this assignment consider for a minute that songs might only be comprised of 2 words: FA or LA.
